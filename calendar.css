@@ -104,3 +104,15 @@
 
 
 .goosse-calendar-day-number {    display: inline-block;    position: relative;    z-index: 1;}
+
+/* Time Picker Styles */
+.goosse-time-picker h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.goosse-time-select label {
+    display: block;
+    text-align: center;
+    margin-bottom: 2px;
+}

@@ -195,6 +195,7 @@
 
 <script>
     // Alleen Tijd (HH:mm)
+
     goosseCalendar.create({
         target: '#timeOnly',
         showTimePicker: true,
@@ -202,14 +203,15 @@
         timeFormat: 'HH:mm',
         defaultTime: '09:00',
         timeStep: 15,
-        onSelect: (result, events) => {
-            if (typeof result === 'object') {
-                document.getElementById('timeOnlyResult').textContent = result.time;
-            }
+        onSelect: (result) => {
+            document.getElementById('timeOnlyResult').textContent =
+                result.time ?? 'Nog geen tijd gekozen';
         }
     });
 
+
     // Alleen Tijd (HH:mm:ss)
+
     goosseCalendar.create({
         target: '#timeOnlySeconds',
         showTimePicker: true,
@@ -217,14 +219,15 @@
         timeFormat: 'HH:mm:ss',
         defaultTime: '09:00:00',
         timeStep: 30,
-        onSelect: (result, events) => {
-            if (typeof result === 'object') {
-                document.getElementById('timeOnlySecondsResult').textContent = result.time;
-            }
+        onSelect: (result) => {
+            document.getElementById('timeOnlySecondsResult').textContent =
+                result.time ?? 'Nog geen tijd gekozen';
         }
     });
 
+
     // Kalender + Tijd (HH:mm)
+
     goosseCalendar.create({
         target: '#calendarTime',
         showTimePicker: true,
@@ -233,15 +236,17 @@
         timeStep: 10,
         jumpToToday: true,
         showTodayButton: true,
-        onSelect: (result, events) => {
-            if (typeof result === 'object') {
+        onSelect: (result) => {
+            if (result.date && result.time) {
                 document.getElementById('calendarTimeResult').textContent =
                     `${result.date} om ${result.time}`;
             }
         }
     });
 
+
     // Kalender + Tijd (HH:mm:ss)
+
     goosseCalendar.create({
         target: '#calendarTimeSeconds',
         showTimePicker: true,
@@ -250,13 +255,14 @@
         timeStep: 5,
         jumpToToday: true,
         showTodayButton: true,
-        onSelect: (result, events) => {
-            if (typeof result === 'object') {
+        onSelect: (result) => {
+            if (result.date && result.time) {
                 document.getElementById('calendarTimeSecondsResult').textContent =
                     `${result.date} om ${result.time}`;
             }
         }
     });
+
 
     // Dropdown DateTime Picker
     goosseCalendar.create({
@@ -267,15 +273,21 @@
         timeStep: 15,
         jumpToToday: true,
         showTodayButton: true,
-        onSelect: (result, events) => {
-            if (typeof result === 'object') {
-                document.getElementById('dropdownDateTime').value = `${result.date} ${result.time}`;
+        onSelect: (result) => {
+            if (result.date && result.time) {
+                document.getElementById('dropdownDateTime').value =
+                    `${result.date} ${result.time}`;
                 document.getElementById('dropdownResult').textContent =
                     `${result.date} om ${result.time}`;
             }
-            // Close dropdown
-            const dropdown = document.querySelector('#dropdownDateTimePicker').closest('.dropdown');
-            const bsDropdown = bootstrap.Dropdown.getInstance(dropdown.querySelector('[data-bs-toggle="dropdown"]'));
+
+            const dropdown = document
+                .querySelector('#dropdownDateTimePicker')
+                .closest('.dropdown');
+
+            const bsDropdown = bootstrap.Dropdown.getInstance(
+                dropdown.querySelector('[data-bs-toggle="dropdown"]')
+            );
             if (bsDropdown) bsDropdown.hide();
         }
     });
@@ -288,14 +300,19 @@
         timeFormat: 'HH:mm',
         defaultTime: '07:00',
         timeStep: 30,
-        onSelect: (result, events) => {
-            if (typeof result === 'object') {
+        onSelect: (result) => {
+            if (result.time) {
                 document.getElementById('dropdownTimeOnly').value = result.time;
                 document.getElementById('dropdownTimeResult').textContent = result.time;
             }
-            // Close dropdown
-            const dropdown = document.querySelector('#dropdownTimePicker').closest('.dropdown');
-            const bsDropdown = bootstrap.Dropdown.getInstance(dropdown.querySelector('[data-bs-toggle="dropdown"]'));
+
+            const dropdown = document
+                .querySelector('#dropdownTimePicker')
+                .closest('.dropdown');
+
+            const bsDropdown = bootstrap.Dropdown.getInstance(
+                dropdown.querySelector('[data-bs-toggle="dropdown"]')
+            );
             if (bsDropdown) bsDropdown.hide();
         }
     });
