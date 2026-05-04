@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <title>Goosse – Simple Calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Goosse Simple Calendar -->
+    <link rel="stylesheet" href="../calendar.css">
+
+    <!-- Andere Goosse components (optioneel in demo) -->
+    <link rel="stylesheet" href="../../Bootstrap-5-Simple-Input/input.css">
+    <link rel="stylesheet" href="../../Bootstrap-5-Simple-Toast/toast.css">
+
+    <style>
+        body {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Menu -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 rounded">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Goosse Calendar Demos</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#demoNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="demoNavbar">
+            <ul class="navbar-nav me-auto" id="demoNav">
+                <!-- Navigation items will be populated by JavaScript -->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h1 class="mb-4">Goosse – Simple Calendar</h1>
+
+<p class="text-muted">
+    Inline en dropdown kalendercomponent (Bootstrap 5)<br>
+    Klik op een dag om alle info op te vragen.
+</p>
+
+<hr>
+
+## Inline kalender
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div id="inlineCalendar"></div>
+    </div>
+</div>
+
+<hr>
+
+## Dropdown kalender (datepicker‑achtig)
+
+<div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle"
+            data-bs-toggle="dropdown">
+        Kies datum
+    </button>
+
+    <div class="dropdown-menu p-3">
+        <div id="dropdownCalendar"></div>
+    </div>
+</div>
+
+<!-- Bootstrap bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Goosse components -->
+<script src="../../Bootstrap-5-Simple-Toast/toast.js"></script>
+<script src="../../Bootstrap-5-Simple-Input/input.js"></script>
+<script src="../calendar.js"></script>
+
+<!-- Navigation Script -->
+<script src="navigation.js"></script>
+
+<script>
+    /* ==========================================================
+       Demo data
+    ========================================================== */
+    const calendarData = {
+        '2026-05-01': { status: 'inactive', info: 'Feestdag' },
+        '2026-05-05': { status: 'inactive', info: 'Verlof' },
+        '2026-05-12': { status: 'active', info: 'Werkdag 08:00–17:00' }
+    };
+
+    /* ==========================================================
+       Inline kalender
+    ========================================================== */
+    goosseCalendar.create({
+        target: '#inlineCalendar',
+        data: calendarData,
+
+        onSelect(date, info) {
+            openDayInfo(date, info);
+        }
+    });
+
+    /* ==========================================================
+       Dropdown kalender
+    ========================================================== */
+    goosseCalendar.create({
+        target: '#dropdownCalendar',
+        data: calendarData,
+
+        onSelect(date, info) {
+            openDayInfo(date, info);
+        }
+    });
+
+    /* ==========================================================
+       Daginfo ophalen / tonen
+    ========================================================== */
+    function openDayInfo(date, info) {
+
+        goosseInput.open({
+            title: 'Dag informatie',
+            description: `Gegevens voor ${date}`,
+            fields: [
+                { type: 'hidden', name: 'date', value: date },
+                {
+                    type: 'text',
+                    name: 'status',
+                    label: 'Status',
+                    value: info?.status ?? 'onbekend'
+                },
+                {
+                    type: 'textarea',
+                    name: 'info',
+                    label: 'Beschrijving',
+                    value: info?.info ?? 'Geen extra info'
+                }
+            ],
+
+            onSubmit(data) {
+                const values = Object.fromEntries(data);
+
+                goosseToast.show({
+                    type: 'success',
+                    title: 'Opgeslagen',
+                    message: `Dag ${values.date} bijgewerkt`
+                });
+
+                return true;
+            }
+        });
+
+    }
+</script>
+
+</body>
+</html>

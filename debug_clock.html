@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock Debug</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Calendar CSS -->
+    <link rel="stylesheet" href="calendar.css">
+    
+    <style>
+        body {
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+        
+        .debug-section {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .calendar-container {
+            display: inline-block;
+            margin: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Clock Time Picker Debug</h1>
+        
+        <div class="debug-section">
+            <h2>Simple Test</h2>
+            <div id="simple-test"></div>
+            <div class="mt-3">
+                <strong>Result:</strong> <span id="simple-result">No selection</span>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Clock Test</h2>
+            <div id="clock-test"></div>
+            <div class="mt-3">
+                <strong>Result:</strong> <span id="clock-result">No selection</span>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Console Output</h2>
+            <div id="console-output" style="background: #f8f9fa; padding: 1rem; border-radius: 4px; font-family: monospace; height: 200px; overflow-y: auto;">
+                Console messages will appear here...
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Calendar JS -->
+    <script src="calendar.js"></script>
+    
+    <script>
+        // Override console.log to show in page
+        const originalLog = console.log;
+        const originalError = console.error;
+        const consoleDiv = document.getElementById('console-output');
+        
+        function addToConsole(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'red' : 'black';
+            consoleDiv.innerHTML += `<div style="color: ${color};">[${timestamp}] ${message}</div>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToConsole(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToConsole(args.join(' '), 'error');
+        };
+        
+        console.log('Debug page loaded');
+        
+        try {
+            console.log('Creating simple calendar...');
+            const simpleCal = goosseCalendar.create({
+                target: '#simple-test',
+                showTimePicker: true,
+                showCalendar: false,
+                timePickerLayout: 'simple',
+                defaultTime: '09:15',
+                onSelect: function(result) {
+                    console.log('Simple selected:', result);
+                    document.getElementById('simple-result').textContent = JSON.stringify(result);
+                }
+            });
+            console.log('Simple calendar created successfully');
+        } catch (error) {
+            console.error('Error creating simple calendar:', error.message);
+        }
+        
+        try {
+            console.log('Creating clock calendar...');
+            const clockCal = goosseCalendar.create({
+                target: '#clock-test',
+                showTimePicker: true,
+                showCalendar: false,
+                timePickerLayout: 'clock',
+                defaultTime: '14:30',
+                onSelect: function(result) {
+                    console.log('Clock selected:', result);
+                    document.getElementById('clock-result').textContent = JSON.stringify(result);
+                }
+            });
+            console.log('Clock calendar created successfully');
+        } catch (error) {
+            console.error('Error creating clock calendar:', error.message);
+        }
+    </script>
+</body>
+</html>
