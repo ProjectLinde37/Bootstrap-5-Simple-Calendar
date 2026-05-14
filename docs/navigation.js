@@ -4,8 +4,7 @@ async function buildNavigation() {
         { file: 'index.html' },
         { file: 'ajax.html' },
         { file: 'datepicker.html' },
-        { file: 'datetime.html' },
-        { file: 'datetime_v2.html' }
+        { file: 'timepicker.html' }
     ];
 
     const currentPage = window.location.pathname.split('/').pop();

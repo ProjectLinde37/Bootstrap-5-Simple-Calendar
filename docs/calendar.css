@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Goosse Simple Calendar (inline / dropdown)
+========================================================================== */
+
+.goosse-calendar {
+    width: 280px;
+    user-select: none;
+}
+
+.goosse-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.goosse-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .25rem;
+}
+
+.goosse-calendar-weekday {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--bs-secondary-color);
+}
+
+.goosse-calendar-day {
+    text-align: center;
+    padding: .4rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.goosse-calendar-day:hover {
+    background: var(--bs-secondary-bg);
+}
+
+.goosse-calendar-day.active {
+    background: #0d6efd;
+    color: #fff;
+}
+
+.goosse-calendar-day.inactive {
+    opacity: .4;
+}
+
+
+/* Dag met geplande info */
+.goosse-calendar-day.has-data {
+    background-color: var(--bs-secondary-bg);
+}
+
+/* Actieve dag */
+.goosse-calendar-day.status-active {
+    background-color: #e6f4ea;
+}
+
+/* Niet-actieve dag */
+.goosse-calendar-day.status-inactive {
+    background-color: #f8d7da;
+}
+
+/* Vandaag (cirkel) */
+.goosse-calendar-day.today {
+    position: relative;
+    font-weight: 600;
+}
+
+.goosse-calendar-day.today::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 2px solid var(--bs-primary);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.goosse-calendar-day {
+    position: relative;
+}
+
+.goosse-calendar-count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    transform: translate(30%, -30%);
+
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+
+    font-size: 0.7rem;
+    line-height: 18px;
+    text-align: center;
+
+    background: var(--bs-primary);
+    color: #fff;
+    border-radius: 999px;
+
+    z-index: 3; /* boven cirkel */
+}
+
+
+.goosse-calendar-day-number {    display: inline-block;    position: relative;    z-index: 1;}
+
+/* Time Picker Styles */
+.goosse-time-picker h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.goosse-time-select label {
+    display: block;
+    text-align: center;
+    margin-bottom: 2px;
+}
