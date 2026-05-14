@@ -1,0 +1,18 @@
+{
+  "2026-04-15": [
+    {
+      "status": "active",
+      "label": "Vergadering",
+      "start": "10:00",
+      "end": "11:00"
+    }
+  ],
+  "2026-04-22": [
+    {
+      "status": "inactive",
+      "label": "Vakantie",
+      "start": null,
+      "end": null
+    }
+  ]
+}

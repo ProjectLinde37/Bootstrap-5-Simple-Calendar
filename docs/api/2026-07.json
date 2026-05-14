@@ -1,0 +1,32 @@
+{
+  "2026-07-02": [
+    {
+      "status": "active",
+      "label": "Demo",
+      "start": "07:00",
+      "end": "12:00"
+    },
+    {
+      "status": "active",
+      "label": "Support",
+      "start": "07:00",
+      "end": "15:00"
+    }
+  ],
+  "2026-07-11": [
+    {
+      "status": "inactive",
+      "label": "Verlof",
+      "start": null,
+      "end": null
+    }
+  ],
+  "2026-07-20": [
+    {
+      "status": "active",
+      "label": "Sprint planning",
+      "start": "09:00",
+      "end": "11:00"
+    }
+  ]
+}
